@@ -9,7 +9,7 @@ import (
 
 func SignupHandler(c *gin.Context) {
 	var req struct {
-		Username string `json:"username"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 	if err := c.BindJSON(&req); err != nil {
@@ -18,7 +18,7 @@ func SignupHandler(c *gin.Context) {
 	}
 
 	// TODO: hash password before saving.
-	err := db.CreateUser(req.Username, req.Password)
+	err := db.CreateUser(req.Email, req.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create user"})
 		return
@@ -29,7 +29,7 @@ func SignupHandler(c *gin.Context) {
 
 func LoginHandler(c *gin.Context) {
 	var req struct {
-		Username string `json:"username"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 	if err := c.BindJSON(&req); err != nil {
@@ -37,7 +37,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	ok, _ := db.CheckUserCredentials(req.Username, req.Password)
+	ok, _ := db.CheckUserCredentials(req.Email, req.Password)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
 		return
