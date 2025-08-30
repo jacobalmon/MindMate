@@ -17,7 +17,6 @@ func SignupHandler(c *gin.Context) {
 		return
 	}
 
-	// TODO: hash password before saving.
 	err := db.CreateUser(req.Email, req.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create user"})
