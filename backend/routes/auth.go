@@ -1,10 +1,13 @@
 package routes
 
 import (
+	"mentalhealthchat/config"
 	"mentalhealthchat/db"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func SignupHandler(c *gin.Context) {
@@ -42,6 +45,19 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	// TODO generate JWT token here
-	c.JSON(http.StatusOK, gin.H{"message": "login successful"})
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"email": req.Email,
+		"exp":   time.Now().Add(time.Hour * 24).Unix(),
+	})
+
+	tokenString, err := token.SignedString(config.JwtSecret)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not generate token"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "login successful",
+		"token":   tokenString,
+	})
 }

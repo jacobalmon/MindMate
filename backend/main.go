@@ -12,12 +12,17 @@ func main() {
 
 	r := gin.Default()
 
+	// Public Routes.
 	r.POST("/auth/signup", routes.SignupHandler)
 	r.POST("/auth/login", routes.LoginHandler)
-	r.POST("/chat/send", routes.ChatHandler)
-	r.GET("/chat/history", routes.ChatHistoryHandler)
-	r.POST("/mood/submit", routes.MoodHandler)
-	r.GET("/mood/history", routes.MoodHistoryHandler)
+
+	// Protected Routes.
+	auth := r.Group("/")
+	auth.Use(routes.AuthMiddleware())
+	auth.POST("/chat/send", routes.ChatHandler)
+	auth.GET("/chat/history", routes.ChatHistoryHandler)
+	auth.POST("/mood/submit", routes.MoodHandler)
+	auth.GET("/mood/history", routes.MoodHistoryHandler)
 
 	r.Run(":8080")
 }
