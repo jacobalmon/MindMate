@@ -5,9 +5,9 @@ import (
 	"log"
 )
 
-func InsertMood(userID int, mood string) error {
+func InsertMood(userID int, note string, mood_score int) error {
 	_, err := Pool.Exec(context.Background(),
-		"INSERT INTO moods (user_id, mood) VALUES ($1, $2)", userID, mood)
+		"INSERT INTO moods (user_id, note, mood_score) VALUES ($1, $2, $3)", userID, note, mood_score)
 	if err != nil {
 		log.Println("InsertMood error", err)
 	}
