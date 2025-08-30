@@ -15,6 +15,7 @@ func main() {
 	r.POST("/auth/signup", routes.SignupHandler)
 	r.POST("/auth/login", routes.LoginHandler)
 	r.POST("/chat/send", routes.ChatHandler)
+	r.GET("/chat/history", routes.ChatHistoryHandler)
 	r.POST("/mood/submit", routes.MoodHandler)
 
 	r.Run(":8080")
