@@ -3,7 +3,15 @@ package db
 import (
 	"context"
 	"log"
+	"time"
 )
+
+type Mood struct {
+	ID        int       `json:"id"`
+	Note      string    `json:"note"`
+	Score     int       `json:"mood_score"`
+	CreatedAt time.Time `json:"created_at"`
+}
 
 func InsertMood(userID int, note string, mood_score int) error {
 	_, err := Pool.Exec(context.Background(),
@@ -14,21 +22,27 @@ func InsertMood(userID int, note string, mood_score int) error {
 	return err
 }
 
-func GetMoodHistory(userID int) ([]string, error) {
+func GetMoodHistory(userID, limit int) ([]Mood, error) {
 	rows, err := Pool.Query(context.Background(),
-		"SELECT mood FROM moods WHERE user_id=$1 ORDER BY created_at DESC", userID)
+		"SELECT id, note, mood_score, created_at FROM moods WHERE user_id=$1 ORDER BY created_at DESC LIMIT $2",
+		userID, limit)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var moods []string
+	var moods []Mood
 	for rows.Next() {
-		var mood string
-		if err := rows.Scan(&mood); err != nil {
+		var m Mood
+		if err := rows.Scan(&m.ID, &m.Note, &m.Score, &m.CreatedAt); err != nil {
 			return nil, err
 		}
-		moods = append(moods, mood)
+		moods = append(moods, m)
 	}
+
+	for i, j := 0, len(moods)-1; i < j; i, j = i+1, j-1 {
+		moods[i], moods[j] = moods[j], moods[i]
+	}
+
 	return moods, nil
 }

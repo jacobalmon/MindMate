@@ -17,6 +17,7 @@ func main() {
 	r.POST("/chat/send", routes.ChatHandler)
 	r.GET("/chat/history", routes.ChatHistoryHandler)
 	r.POST("/mood/submit", routes.MoodHandler)
+	r.GET("/mood/history", routes.MoodHistoryHandler)
 
 	r.Run(":8080")
 }

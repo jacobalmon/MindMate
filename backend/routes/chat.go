@@ -33,7 +33,6 @@ func ChatHandler(c *gin.Context) {
 }
 
 func ChatHistoryHandler(c *gin.Context) {
-	// Define the Message struct locally
 	type Message struct {
 		ID        int       `json:"id"`
 		Role      string    `json:"role"`
@@ -41,7 +40,6 @@ func ChatHistoryHandler(c *gin.Context) {
 		CreatedAt time.Time `json:"created_at"`
 	}
 
-	// Get user_id from query parameter
 	userIDStr := c.Query("user_id")
 	userID, err := strconv.Atoi(userIDStr)
 	if err != nil {
@@ -49,14 +47,12 @@ func ChatHistoryHandler(c *gin.Context) {
 		return
 	}
 
-	// Optional limit parameter
 	limitStr := c.Query("limit")
 	limit, err := strconv.Atoi(limitStr)
 	if err != nil || limit <= 0 {
 		limit = 50 // default last 50 messages
 	}
 
-	// Fetch messages from database
 	rows, err := db.Pool.Query(context.Background(),
 		"SELECT id, role, text, created_at FROM messages WHERE user_id=$1 ORDER BY created_at DESC LIMIT $2",
 		userID, limit)
@@ -76,7 +72,6 @@ func ChatHistoryHandler(c *gin.Context) {
 		messages = append(messages, m)
 	}
 
-	// Reverse slice for chronological order
 	for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
 		messages[i], messages[j] = messages[j], messages[i]
 	}
