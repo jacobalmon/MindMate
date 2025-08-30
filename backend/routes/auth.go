@@ -1,17 +1,48 @@
 package routes
 
 import (
+	"mentalhealthchat/db"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-// Temp signup handler.
 func SignupHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "signup endpoint working"})
+	var req struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+
+	// TODO: hash password before saving.
+	err := db.CreateUser(req.Username, req.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "user created"})
 }
 
-// Temp login handler.
 func LoginHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "login endpoint working"})
+	var req struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+
+	ok, _ := db.CheckUserCredentials(req.Username, req.Password)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
+		return
+	}
+
+	// TODO generate JWT token here
+	c.JSON(http.StatusOK, gin.H{"message": "login successful"})
 }
