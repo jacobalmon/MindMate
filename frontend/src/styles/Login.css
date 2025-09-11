@@ -1,0 +1,76 @@
+/* Full-screen background with smooth gradient */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* ensures full viewport height */
+  width: 100vw;      /* full width */
+  background: linear-gradient(135deg, #667eea, #764ba2); /* blended purple/blue */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* prevent scrollbars */
+}
+
+/* The login form box */
+.login-box {
+  background: rgba(255, 255, 255, 0.1); /* slightly transparent */
+  backdrop-filter: blur(10px); /* frosted glass effect */
+  padding: 50px;
+  border-radius: 25px;
+  width: 400px;  /* slightly larger for big screens */
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* Title */
+.login-box h1 {
+  color: #fff;
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+  font-size: 2.5rem;
+}
+
+/* Inputs */
+.login-box input {
+  padding: 15px;
+  margin: 12px 0;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 18px;
+}
+
+.login-box input::placeholder {
+  color: #e0e0e0;
+}
+
+/* Button */
+.login-box button {
+  padding: 15px;
+  width: 100%;
+  margin-top: 25px;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* warm coral gradient */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+}
+
+/* Message text */
+.login-box .message {
+  color: #ffe;
+  margin-top: 18px;
+  font-size: 16px;
+}
