@@ -1,26 +1,49 @@
 /* Full-screen background with smooth gradient */
 .login-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  min-height: 100vh; /* ensures full viewport height */
-  width: 100vw;      /* full width */
-  background: linear-gradient(135deg, #667eea, #764ba2); /* blended purple/blue */
+  justify-content: center; /* vertical centering */
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; /* prevent scrollbars */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Top header card */
+.top-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* keep above background */
+}
+
+.top-card h2 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.8rem;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 
 /* The login form box */
 .login-box {
   background: rgba(255, 255, 255, 0.1); /* slightly transparent */
-  backdrop-filter: blur(10px); /* frosted glass effect */
+  backdrop-filter: blur(10px);          /* frosted glass effect */
   padding: 50px;
-  border-radius: 25px;
-  width: 400px;  /* slightly larger for big screens */
-  max-width: 90%;
+  border-radius: 25px;                   /* keep rounded corners */
+  width: 600px;                          /* wider for horizontal rectangle */
+  min-height: 350px;                     /* shorter height */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;               /* vertically center content */
   box-shadow: 0 10px 40px rgba(0,0,0,0.3);
   text-align: center;
 }
@@ -30,7 +53,7 @@
   color: #fff;
   margin-bottom: 40px;
   text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
 }
 
 /* Inputs */
@@ -54,7 +77,7 @@
   padding: 15px;
   width: 100%;
   margin-top: 25px;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* warm coral gradient */
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: white;
   border: none;
   border-radius: 12px;
@@ -73,4 +96,27 @@
   color: #ffe;
   margin-top: 18px;
   font-size: 16px;
+}
+
+/* Container for forgot & signup links */
+.links-container {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  gap: 4px;               /* spacing between links */
+  margin-top: 15px;       /* space from login button */
+  width: 100%;
+  align-items: center;    /* center horizontally */
+}
+
+.forgot,
+.signup {
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.forgot:hover,
+.signup:hover {
+  text-decoration: underline;
 }
