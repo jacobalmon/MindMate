@@ -1,13 +1,28 @@
 package main
 
 import (
+	"log"
 	"mentalhealthchat/db"
 	"mentalhealthchat/routes"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Load .env variables
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, relying on system environment variables")
+	}
+
+	// Optional: check they are loaded
+	dbURL := os.Getenv("DATABASE_URL")
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if dbURL == "" || jwtSecret == "" {
+		log.Fatal("DATABASE_URL or JWT_SECRET not set")
+	}
+
 	db.Connect() // Ensure DB is connected before starting server.
 
 	r := gin.Default()
