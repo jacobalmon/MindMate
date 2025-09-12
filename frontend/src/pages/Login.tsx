@@ -6,13 +6,33 @@ function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       setMessage('Please enter email and password');
       return;
     }
-    setMessage('Logging in...');
-    // TODO: Call your backend API here
+    
+    try {
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Login Successful');
+        localStorage.setItem('token', data.token);
+      } else {
+        setMessage(data.error || 'Login Failed');
+      }
+    } catch (error) {
+      console.error('Error Logging In', error);
+      setMessage('Server Error, Please Try Again Later.');
+    }
   };
 
   const handleForgotPassword = () => {
@@ -21,7 +41,7 @@ function Login() {
 
   const handleSignUp = () => {
     alert('Redirect to sign up page (implement this)');
-  }
+  };
 
   return (
     <div className="login-container">
