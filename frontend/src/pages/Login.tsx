@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import '../styles/Login.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(''); 
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -43,15 +45,12 @@ function Login() {
     alert('Redirect to sign up page (implement this)');
   };
 
-  return (
+    return (
     <div className="login-container">
-      {/* Top header */}
       <div className="top-card">
         <h2>MindMate</h2>
       </div>
 
-      
-      {/* Center Login Card */}
       <div className="login-box">
         <h1>Login</h1>
         <input
@@ -68,19 +67,15 @@ function Login() {
         />
         <button onClick={handleLogin}>Login</button>
 
-        {/* Links container */}
-        <div className="links-container">
-          <p className="forgot" onClick={handleForgotPassword}>
-            Forgot password?
-          </p>
-          <p className="signup" onClick={handleSignUp}>
-            Don't have an account? Sign Up
-          </p>
-        </div>
+        <p className="forgot" onClick={handleForgotPassword}>
+          Forgot password?
+        </p>
+        <p className="signup" onClick={() => navigate('/signup')}>
+          Don&apos;t have an account? Sign Up
+        </p>
 
         {message && <p className="message">{message}</p>}
       </div>
-
     </div>
   );
 }
