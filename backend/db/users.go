@@ -36,3 +36,30 @@ func CheckUserCredentials(email, password string) (bool, error) {
 	}
 	return true, nil
 }
+
+func UserExists(email string) bool {
+	var exists bool
+	err := Pool.QueryRow(context.Background(),
+		"SELECT EXISTS(SELECT 1 FROM users WHERE email=$1)", email).Scan(&exists)
+	if err != nil {
+		log.Println("UserExists Error:", err)
+		return false
+	}
+	return exists
+}
+
+func UpdateUserPassword(email, newPassword string) error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		log.Println("Password Hashing Failed:", err)
+		return err
+	}
+
+	_, err = Pool.Exec(context.Background(),
+		"UPDATE users SET password_hash = $1 WHERE email = $2", string(hashedPassword), email)
+	if err != nil {
+		log.Println("UpdateUserPassword Error:", err)
+		return err
+	}
+	return nil
+}
