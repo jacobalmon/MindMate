@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(''); 
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -13,7 +13,7 @@ function Login() {
       setMessage('Please enter email and password');
       return;
     }
-    
+
     try {
       const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
@@ -38,14 +38,14 @@ function Login() {
   };
 
   const handleForgotPassword = () => {
-    alert('Redirect to password reset page (implement this)');
+    navigate('/forgot-password'); 
   };
 
   const handleSignUp = () => {
-    alert('Redirect to sign up page (implement this)');
+    navigate('/signup'); 
   };
 
-    return (
+  return (
     <div className="login-container">
       <div className="top-card">
         <h2>MindMate</h2>
@@ -70,7 +70,7 @@ function Login() {
         <p className="forgot" onClick={handleForgotPassword}>
           Forgot password?
         </p>
-        <p className="signup" onClick={() => navigate('/signup')}>
+        <p className="signup" onClick={handleSignUp}>
           Don&apos;t have an account? Sign Up
         </p>
 
