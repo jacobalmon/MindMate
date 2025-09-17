@@ -19,7 +19,7 @@
 - **Backend:** Go (Gin), PostgreSQL (Supabase)  
 - **Frontend:** React (Vite + TypeScript)  
 - **Authentication:** JWT  
-- **AI Integration:** LLM-based chat (in development)  
+- **AI Integration:** Agent-based chat (in development)  
 - **Email Services:** MailerSend (for password reset emails)  
 - **Deployment:** AWS (planned)  
 
