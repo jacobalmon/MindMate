@@ -1,6 +1,6 @@
 # MindMate 🧠💬
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Frontend](https://img.shields.io/badge/Frontend-React-blue)](https://reactjs.org/)
 [![Backend](https://img.shields.io/badge/Backend-Go-lightgrey)](https://golang.org/)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL-blue)](https://www.postgresql.org/)
@@ -24,4 +24,4 @@
 - **Deployment:** AWS (planned)  
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
